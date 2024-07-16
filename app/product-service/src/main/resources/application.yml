@@ -1,0 +1,7 @@
+Server :
+  Port : 10002
+Spring :
+  datasource :
+    mongodb :
+      uri : mongodb://localhost:27107/product
+
