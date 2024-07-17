@@ -27,7 +27,20 @@ This is a sample e-commerce application developed using Java Spring Boot. The ap
 
 ### Steps
 
-1. **Clone the Repository**:
+1. Clone the Repository:
    ```sh
    git clone https://github.com/your-username/ecommerce-application.git
    cd ecommerce-application
+2. Configure the Database:
+Create a MongoDB database named product,orders and user.
+Update the application.properties file in the src/main/resources directory with your database configurations.
+
+3. Build the Project:
+   mvn clean install
+4.mvn spring-boot:run
+   
+   
+API Documentation
+The application uses Swagger for API documentation. Once the application is running, you can access the Swagger UI at:
+http://localhost:{portNo}/swagger-ui/index.html
+   
