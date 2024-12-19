@@ -4,4 +4,10 @@ Spring :
   datasource :
     mongodb :
       uri : mongodb://localhost:27107/product
+  application:
+    name: product-service
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka/
 
