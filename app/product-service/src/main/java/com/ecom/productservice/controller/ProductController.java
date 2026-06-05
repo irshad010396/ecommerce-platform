@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     @Autowired
@@ -18,31 +18,32 @@ public class ProductController {
 
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
-    @PostMapping("addproduct")
-    public ResponseEntity<String> addProduct(@RequestBody  ProductDto productDto) {
-        log.info("request received for adding product with productId :"+productDto.getProductId());
+    @PostMapping
+    public ResponseEntity<String> addProduct(@RequestBody ProductDto productDto) {
+        log.info("Request received for adding product with name={}", productDto.getName());
         String message = productService.addProduct(productDto);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
-    @GetMapping("getproduct")
-    public ResponseEntity<ProductDto> getProduct(@RequestParam String id) {
-        log.info("request received for fetching product details wit id :"+id);
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable String id) {
+        log.info("Request received for fetching product details for id={}", id);
         ProductDto productDto = productService.getProduct(id);
-        return new ResponseEntity<>(productDto, HttpStatus.OK);
+        return ResponseEntity.ok(productDto);
     }
 
-    @PutMapping("updateproduct")
-    public ResponseEntity<String> updateProduct(@RequestBody ProductDto productDto) {
-        log.info("request received for updating product details with productId :"+productDto.getProductId());
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable String id, @RequestBody ProductDto productDto) {
+        log.info("Request received for updating product id={}", id);
+        productDto.setProductId(id);
         String message = productService.updateProduct(productDto);
-        return new ResponseEntity<>(message,HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
-    @DeleteMapping("deleteproduct")
-    public ResponseEntity<String> deleteProdcut(@RequestParam String id) {
-        log.info("request received for deleting product details with id :"+id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProdcut(@PathVariable String id) {
+        log.info("Request received for deleting product id={}", id);
         String message = productService.deleteProduct(id);
-        return new ResponseEntity<>(message,HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 }

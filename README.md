@@ -83,3 +83,10 @@ This is a sample e-commerce application developed using Java Spring Boot. The ap
   3.Access Services:
      Eureka Server: http://<minikube-ip>:<eureka-port>
      API Gateway: http://<minikube-ip>:<gateway-port>   
+
+
+
+  
+
+ 
+   
