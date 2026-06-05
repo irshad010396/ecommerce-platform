@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "order")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
 
     @Autowired
@@ -21,31 +21,32 @@ public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
 
-    @PostMapping("createorder")
+    @PostMapping
     public ResponseEntity<String> createOrder(@Valid @RequestBody OrderDto orderdto) {
-        log.info("Request received for creating order for user" +orderdto.getUserId());
+        log.info("Request received for creating order for user={}", orderdto.getUserId());
         String message = orderService.createOrder(orderdto);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
-    @GetMapping("getOrderDetails")
-    public ResponseEntity<OrderDto> getOrderDeatils(@RequestParam String id) {
-        log.info("request received for fetching order details with id :"+id);
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDto> getOrderDeatils(@PathVariable String id) {
+        log.info("Request received for fetching order details with id={}", id);
         OrderDto orderDto = orderService.getOrderDetails(id);
-        return new ResponseEntity<>(orderDto, HttpStatus.OK);
+        return ResponseEntity.ok(orderDto);
     }
 
-    @PutMapping("updateorder")
-    public ResponseEntity<String> updateOrder(OrderDto orderDto) {
-        log.info("request received for updating order with order id :"+orderDto.getId());
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateOrder(@PathVariable String id, @RequestBody OrderDto orderDto) {
+        log.info("Request received for updating order with order id={}", id);
+        orderDto.setId(id);
         String message = orderService.updateOrder(orderDto);
-        return new ResponseEntity<>(message , HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
-    @DeleteMapping("deleteorder")
-    public ResponseEntity<String> deleteOrder(@RequestParam String id) {
-        log.info("request received for deleting order with order id :"+id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable String id) {
+        log.info("Request received for deleting order with order id={}", id);
         String message = orderService.deleteOrder(id);
-        return new ResponseEntity<>(message , HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 }

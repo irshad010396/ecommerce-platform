@@ -10,16 +10,38 @@ spring:
         - id: product-service
           uri: lb://PRODUCT-SERVICE
           predicates:
-            - Path=/product/*
+            - Path=/api/v1/products/**
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/*
+            - Path=/api/v1/users/**
+        - id: auth-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/order/*
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://localhost:8761/eureka/
+            - Path=/api/v1/orders/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: ${JWT_SECRET:Zm9yX3NlY3VyZS1qd3Qtc2VydmljZS1wcm9qZWN0LWtleQ==}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+jwt:
+  secret: ${JWT_SECRET:Zm9yX3NlY3VyZS1qd3Qtc2VydmljZS1wcm9qZWN0LWtleQ==}

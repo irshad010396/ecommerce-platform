@@ -1,13 +1,24 @@
-Server :
-  Port : 10002
-Spring :
-  datasource :
-    mongodb :
-      uri : mongodb://localhost:27107/product
+server:
+  port: 10002
+spring:
   application:
     name: product-service
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://localhost:8761/eureka/
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27107/product}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
 
