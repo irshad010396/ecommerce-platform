@@ -1,92 +1,189 @@
-# E-Commerce Application
-## Overview
+# Production-Ready E-Commerce Microservices Platform
 
-This is a sample e-commerce application developed using Java Spring Boot. The application demonstrates various features including CRUD operations, API documentation with Swagger, logging using Logback, inter-microservice communication, service discovery with Eureka, API routing through API Gateway,containerization with Docker and orchestration with Kubernetes.
+A cloud-native E-Commerce platform built using Spring Boot Microservices architecture with secure JWT authentication, API Gateway, Service Discovery, Docker containerization, and Kubernetes deployment.
 
-## Features
+## Key Features
 
-1. **CRUD Operations**: Basic Create, Read, Update, and Delete operations for the services.
-2. **Service Discovery**: Spring Cloud Eureka Server for dynamic service registration and discovery.
-3. **API Gateway**: Routing and API management using Spring Cloud Gateway
-4. **Swagger**: API documentation and testing.
-5. **Logging**: Logging implementation using Logback.
-6. **Containerization** : Dockerfiles for containerized deployment.
-7. **Kubernetes (K8s)**: Kubernetes manifests file for deployment using kubernetes.
+### Security
 
-## Technologies Used
+* JWT Authentication & Authorization
+* Refresh Token Support
+* Role-Based Access Control (RBAC)
+* BCrypt Password Encryption
+* Secure API Access via Spring Security
 
-- **Java Spring Boot 3.3.1**
-- **Spring Cloud Netflix Eureka**
-- **Spring Cloud Gateway**
-- **Spring Data mongodb**
-- **Swagger (springdoc-openapi-starter-webmvc-ui)**
-- **Logback(with slf4j-api)**
-- **MongoDB**
-- **Docker**
-- **Kubernetes (K8s)**
+### Microservices Architecture
 
-## Setup and Installation
+* User Service
+* Product Service
+* Order Service
+* API Gateway
+* Eureka Service Registry
 
-### Prerequisites
+### Cloud-Native Features
 
-- Java 17 or higher
-- Maven
-- MongoDB
-- Docker
-- Kubernetes
+* Docker Containerization
+* Kubernetes Deployment Manifests
+* Service Discovery using Eureka
+* Load Balancing
+* Inter-Service Communication
 
-### Steps to Run the Application
+### API & Observability
 
-1. Clone the Repository:
-   ```sh
-   git clone https://github.com/your-username/ecommerce-application.git
-   cd ecommerce-application
-2. Configure the Database:
-      Create a MongoDB database named product,orders and user.
-      Update the application.properties file in the src/main/resources directory with your database configurations.
+* OpenAPI / Swagger Documentation
+* Centralized Logging using Logback
+* Global Exception Handling
+* Standardized API Responses
+* API Versioning
+* Spring Boot Actuator Monitoring
 
-3. Build and Run the Project Locally (Without Docker) :
-     mvn clean install
-     mvn spring-boot:run
-   Each service can be accessed individually via their ports.
-     Eureka Server: http://localhost:8761
-     API Gateway: http://localhost:8080  
-   API Documentation
-     The application uses Swagger for API documentation. Once the application is running, you can access the Swagger UI at:
-     http://localhost:{portNo}/swagger-ui/index.html
+---
 
-4.Run with Docker :
-  Each service contains its own Dockerfile. To build and run containers:
-  1.Build Docker Images:
-    docker build -t order-service ./order-service
-    docker build -t product-service ./product-service
-    docker build -t user-service ./user-service
-    docker build -t api-gateway ./api-gateway
-    docker build -t ecom-eureka-server ./ecom-eureka-server
-    
-  2.Run Docker Containers:
-    docker run order-service
-    docker run product-service
-    docker run user-service
-    docker run api-gateway
-    docker run ecom-eureka-server
+## Architecture
 
-5.Run with Kubernetes
-  1.Start Kubernetes Cluster:
-     minikube start
-  2.Apply Kubernetes Manifests:  
-     kubectl apply -f k8s/order-service.yaml
-     kubectl apply -f k8s/product-service.yaml
-     kubectl apply -f k8s/user-service.yaml
-     kubectl apply -f k8s/api-gateway.yaml
-     kubectl apply -f k8s/ecom-eureka-server.yaml
-  3.Access Services:
-     Eureka Server: http://<minikube-ip>:<eureka-port>
-     API Gateway: http://<minikube-ip>:<gateway-port>   
+Client
+↓
+API Gateway
+↓
+Eureka Service Discovery
+↓
+User Service | Product Service | Order Service
+↓
+MongoDB
 
+---
 
+## Tech Stack
 
-  
+| Category         | Technology           |
+| ---------------- | -------------------- |
+| Language         | Java 17              |
+| Framework        | Spring Boot 3        |
+| Security         | Spring Security, JWT |
+| Microservices    | Spring Cloud, Eureka |
+| Gateway          | Spring Cloud Gateway |
+| Database         | MongoDB              |
+| Documentation    | Swagger/OpenAPI      |
+| Build Tool       | Maven                |
+| Containerization | Docker               |
+| Orchestration    | Kubernetes           |
 
- 
-   
+---
+
+## Services
+
+### User Service
+
+* User Registration
+* Login
+* JWT Generation
+* Refresh Token Management
+* Role Management
+
+### Product Service
+
+* Product CRUD Operations
+* Product Search
+* Product Management
+
+### Order Service
+
+* Create Orders
+* View Orders
+* Order Processing
+
+### API Gateway
+
+* Centralized Routing
+* Authentication Validation
+* Request Forwarding
+
+### Eureka Server
+
+* Service Registration
+* Service Discovery
+
+---
+
+## Running Locally
+
+### Clone Repository
+
+```bash
+git clone https://github.com/irshad010396/ecommerce-platform.git
+cd ecommerce-platform
+```
+
+### Build Application
+
+```bash
+mvn clean install
+```
+
+### Start Services
+
+1. Eureka Server
+2. User Service
+3. Product Service
+4. Order Service
+5. API Gateway
+
+### Access Applications
+
+| Service          | URL                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| Eureka Dashboard | http://localhost:8761                                                                          |
+| API Gateway      | http://localhost:8080                                                                          |
+| Swagger UI       | [http://localhost:{port}/swagger-ui/index.html](http://localhost:{port}/swagger-ui/index.html) |
+
+---
+
+## Docker Deployment
+
+Build Images
+
+```bash
+docker build -t user-service .
+docker build -t product-service .
+docker build -t order-service .
+docker build -t api-gateway .
+docker build -t eureka-server .
+```
+
+Run Containers
+
+```bash
+docker-compose up -d
+```
+
+---
+
+## Kubernetes Deployment
+
+```bash
+kubectl apply -f k8s/
+```
+
+Verify Deployments
+
+```bash
+kubectl get pods
+kubectl get services
+```
+
+---
+
+## Future Enhancements
+
+* Apache Kafka Event-Driven Communication
+* Resilience4j Circuit Breaker
+* Distributed Tracing (Zipkin/OpenTelemetry)
+* Prometheus & Grafana Monitoring
+* CI/CD using GitHub Actions
+* Spring Cloud Config Server
+
+---
+
+## Project Goals
+
+This project was developed to gain hands-on experience with enterprise-grade backend development practices including microservices architecture, cloud-native deployment, security implementation, service discovery, API gateway patterns, and container orchestration.
